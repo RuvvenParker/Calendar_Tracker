@@ -1,0 +1,84 @@
+.priority-table-container {
+    width: fixed;
+    /* margin: 0 auto; */
+  }
+  
+  .table {
+    display: grid;
+    grid-template-columns: 1fr 2fr repeat(8, 1fr); /* Adjust the layout */
+    /* gap: 2px; */
+    background: #505050;
+    color: white;
+  }
+  
+  .table-header {
+    display: contents;
+  }
+  
+  .table-row {
+    display: contents;
+  }
+  
+  .table-cell {
+    padding: 5px;
+    text-align: center;
+    border: 0.1rem solid #424242;
+    overflow:visible;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 100px;
+  }
+  
+  .category-header,
+  .tasks-header {
+    background-color: #222;
+    font-weight: bold;
+    
+  }
+  
+  .category-cell {
+    background-color: #818181;
+    font-weight: bold;
+    color: black;
+  }
+  
+  .date-header {
+    background-color: #232323;
+    font-weight: bold;
+  }
+  
+  .task {
+    margin: 2px;
+    padding:1px;
+    border-radius: 4px;
+    /* cursor: pointer; */
+    color: black;
+    font-size: 0.9rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .task:hover{ 
+    transform: scale(1.04);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+  }
+
+  .delete-button {
+    background: rgba(255, 0, 0, 0.2);
+    font-weight: bold;
+    color: rgb(68, 43, 43);
+    border: 0.1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    margin-left: 5px;
+    cursor: pointer;
+    visibility: hidden;
+  }
+
+  .task:hover .delete-button{ 
+    transform: scale(1.04);
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6); */
+    visibility: visible;
+  }
+  
+
+  
+  

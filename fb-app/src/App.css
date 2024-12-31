@@ -1,0 +1,56 @@
+/* Parent container to position forms side by side */
+.form-container {
+  display: flex; /* Enables Flexbox */
+   justify-content: space-between; /*Push forms apart */
+  align-items: flex-start; /* Align forms at the top */
+  margin: 10px 20px 10px 15px; /* Add some spacing around the container */
+}
+
+/* Left forms (Create and Delete) */
+.left-forms {
+  display: flex;
+  flex-direction: column; /* Stack forms vertically */
+  gap: 0px; /* Space between forms */
+  width: 500px; /* Adjust the width as needed */
+}
+
+/* Right form (Update Event) */
+.right-form {
+  width: 100%; /* Takes up 50% of the container */
+  max-width: 500px; /* Optional: Prevent it from being too wide */
+}
+
+#export-cal{
+  position: right;
+  margin: 0px 0px auto auto;
+
+}
+
+.navigation-buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.navigation-buttons button {
+  cursor: pointer;
+  color: #fff;
+  background-color: #434343;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.navigation-buttons button:hover {
+  background-color: #767676;
+}
+/* .pt-wrapper{ 
+  display: flex;
+  margin-left: 0px;
+  /* width: fixed;
+} */
+
+
+/* .calendar-wrapper {
+  display: flex;
+  justify-content: flex-end; 
+  margin-right: 0px;
+} */

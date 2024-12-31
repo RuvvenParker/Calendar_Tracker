@@ -1,0 +1,11 @@
+.form-group {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: flex-start; /* Align items to the start */
+  }
+  
+  .notes-label {
+    margin-bottom: 0; /* Remove default bottom margin */
+    line-height: 1; /* Tighten spacing if needed */
+  }
+  
