@@ -58,7 +58,19 @@ export const generateFormComponents = (
           ></textarea>
         </div>
       );
-    } else {
+    } else if(attribute == "repeatInterval") {
+      return (
+        <div key={attribute}>
+          <label htmlFor={attribute}>{labels[index]}</label>
+          <input
+            type={types[index]}
+            id={attribute}
+            name={attribute}
+            defaultValue="1"
+          />
+        </div>)
+    }
+      else {
       return (
         <div key={attribute}>
           <label htmlFor={attribute}>{labels[index]}</label>

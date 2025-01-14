@@ -5,11 +5,16 @@
   gap: 0px;
   font-family: Arial, sans-serif;
   background: linear-gradient(to bottom, #505050,#222121);
-  max-width: auto ;
+  /* max-width: auto ; */
   border-radius: 10px;
   align-self: right;
 }
-
+@media (max-width:900px) { 
+  .calendar-container{ 
+    font-size: 14px;
+    min-width: 1120px;
+  }
+}
 .grid-header {
   display: contents;
 }
@@ -75,6 +80,12 @@
   height: auto;
   overflow: visible;
 
+}
+
+@media (max-width:768px){ 
+  .event { 
+    font-size: 10px;
+  }
 }
 
 

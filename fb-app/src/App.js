@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import { attributes, types } from "./config/formConfig";
 import { generateFormComponents } from "./utils/AddFormGenerator";
-import { handleDelete } from "./utils/handleEvent";
+import { handleAddMultiple, handleDelete } from "./utils/handleEvent";
 import UpdateEventForm from "./components/UpdateEventForm";
 import Calendar from "./components/Calendar";
 import { fetchCategories } from "./utils/fetchData";
 import CategoryManager from "./components/categoriesForm";
 import PriorityTable from "./components/priorityTable";
 import html2canvas from "html2canvas";
+import { exportWeeklyEventsToExcel } from "./utils/exportToExcel";
 
 // Import Firebase functions
 import { collection, addDoc } from "firebase/firestore";
@@ -155,6 +156,22 @@ function App() {
     });
   };
 
+  const handleEventSubmission = async (e) => {
+    e.preventDefault();
+  
+    // Extract values for repeatInterval and repeatUntil
+    const repeatInterval = e.target.elements["repeatInterval"]?.value || null;
+    const repeatUntil = e.target.elements["repeatUntil"]?.value || null;
+  
+    if (repeatInterval && repeatUntil) {
+      // Call handleAddMultiple if both repeatInterval and repeatUntil are provided
+      await handleAddMultiple(e, attributes, setErrorMessage);
+    } else {
+      // Otherwise, call handleAdd for a single event
+      await handleAdd(e, attributes, setErrorMessage);
+    }
+  };
+
   return (
     <div className="App">
       <header className="App-header"></header>
@@ -175,12 +192,15 @@ function App() {
       <button id="export-cal" onClick={exportCalendar}>
         Export Calendar as Image
       </button>
+      <button onClick={() => exportWeeklyEventsToExcel(weekDates)}>
+      Export Weekly Events to Excel
+      </button>
       <div className="form-container">
         <div className="left-form">
         <form
   className="add"
   id="event_control"
-  onSubmit={(e) => handleAdd(e)}
+  onSubmit={(e) => handleEventSubmission(e)}
 >
   <h3>Create an Event</h3>
   {generateFormComponents(

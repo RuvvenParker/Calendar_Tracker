@@ -9,7 +9,9 @@ export const attributes = [
     "endTime",
     "location",
     "people",
-    "notes"
+    "notes",
+    "repeatInterval", 
+    "repeatUntil"
   ]; 
 
   export const labels = [
@@ -23,7 +25,10 @@ export const attributes = [
     "End",
     "Location",
     "People",
-    "Notes"
+    "Notes",
+    "Repeat Frequency", 
+    "Repeat Until"
+
   ];
   
   export const types = [
@@ -37,6 +42,8 @@ export const attributes = [
     "time", // endTime
     "text",           // location
     "text",
-    "textarea"
+    "textarea", 
+    "number",
+    "date"
   ];
   
