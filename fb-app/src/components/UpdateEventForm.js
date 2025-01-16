@@ -18,7 +18,7 @@ const UpdateEventForm = ({ initialFormData }) => {
 
   const [formData, setFormData] = useState(initialState);
   const [categories, setCategories] = useState([]); // Fetch categories
-
+  const [errorMessage, setErrorMessage] = useState("");
   // Populate form when initialFormData changes
   useEffect(() => {
     if (initialFormData) {
@@ -52,6 +52,10 @@ const UpdateEventForm = ({ initialFormData }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (formData.category.length === 0) {
+      setErrorMessage("Please select at least one category.");
+      return; // Stop the form from submitting
+    }
     try {
       await updateEvent(formData); // Submit updated data
       setFormData(initialState); // Reset the form
