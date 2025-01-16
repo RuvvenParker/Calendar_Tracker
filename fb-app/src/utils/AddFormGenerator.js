@@ -53,7 +53,7 @@ export const generateFormComponents = (
           <textarea
             id={attribute}
             name={attribute}
-            rows="2"
+            rows="3"
             defaultValue={defaultValue}
           ></textarea>
         </div>

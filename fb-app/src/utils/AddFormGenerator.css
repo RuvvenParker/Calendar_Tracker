@@ -8,4 +8,9 @@
     margin-bottom: 0; /* Remove default bottom margin */
     line-height: 1; /* Tighten spacing if needed */
   }
+
+#notes {
+    white-space: pre-wrap; /* Preserves \n as line breaks */
+    word-wrap: break-word; /* Ensures long words wrap to the next line */
+}
   

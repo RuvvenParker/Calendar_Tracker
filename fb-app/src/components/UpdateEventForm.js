@@ -154,12 +154,13 @@ const UpdateEventForm = ({ initialFormData }) => {
 
       <div className="form-group">
         <label htmlFor="notes">Notes</label>
-        <input
+        <textarea
           type="textarea"
           id="notes"
           name="notes"
           value={formData.notes}
           onChange={handleChange}
+          rows="3"
         />
       </div>
 
