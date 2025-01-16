@@ -26,9 +26,13 @@ const Event = ({
   function durationconv(totalMinutes) {
     const hours = Math.floor(totalMinutes / 60); // Extract hours
     const minutes = totalMinutes % 60; // Remainder for minutes
-    if(minutes> 0 && hours > 1){return `${hours}h ${minutes}m`}
-    else if((minutes> 0) && (hours < 1)) {return `${minutes}m`}
-    else{return `${hours}h`};
+    if (minutes > 0 && hours > 1) {
+      return `${hours}h ${minutes}m`;
+    } else if (minutes > 0 && hours < 1) {
+      return `${minutes}m`;
+    } else {
+      return `${hours}h`;
+    }
   }
 
   // Get category colors
@@ -58,7 +62,7 @@ const Event = ({
       eventOpacity = 0.5; // Reduce opacity for fulfilled overdue tasks
     }
   } else {
-    let darkershade = darkenHex(categoryColors[0],0.75)
+    let darkershade = darkenHex(categoryColors[0], 0.75);
     // Not overdue: Solid or gradient color
     backgroundStyle =
       categoryColors.length === 1
@@ -66,8 +70,19 @@ const Event = ({
         : `linear-gradient(to bottom, ${categoryColors.join(", ")})`; // Multiple categories: gradient
   }
 
-
-  // const bordercol= `linear-gradient(to bottom, ${categoryColors.map(darkenHex).join(", ")})`;
+  // Calculate extension height
+  const extensionHeight = (event.extension / 60) * gridSlotHeight; // Convert minutes to pixels
+  const extensionStyle = {
+    height: `${extensionHeight}px`,
+    backgroundColor: event.unfulfilledExtension ? "black" : darkenHex(getEventColor(event.category[0]),0.4),
+    opacity: event.unfulfilledExtension ? 1 : 0.5,
+    borderTop: "2px solid white",
+    position: "absolute",
+    left: `0px`,
+    right: `0px`,
+    bottom: 0, // Align the extension to the bottom of the event
+    borderRadius: "0 0 0px 0px",
+  };
 
   return (
     <div
@@ -75,7 +90,7 @@ const Event = ({
       style={{
         background: backgroundStyle,
         color: textColor,
-        height: `${(duration / 60) * gridSlotHeight}px`,
+        height: `${(duration / 60) * gridSlotHeight + extensionHeight}px`, // Include extension height
         top: `${(startMinute / 60) * gridSlotHeight}px`,
         position: "absolute",
         left: `${padding}px`,
@@ -83,27 +98,43 @@ const Event = ({
         zIndex: 1,
         cursor: "pointer",
         opacity: eventOpacity,
-        border: `3px solid ${darkenHex(categoryColors[0])}`
+        border: `3px solid ${darkenHex(categoryColors[0])}`,
       }}
       onClick={() => onEventClick(event.id)}
     >
       {(!event.fulfilled && !isTaskOverdue(event.date, event.endTime)) && ( <div id="event-shine"></div>)}
       <span className="event-title"><b>{event.title}</b></span>
-      <br/> 
-      <div class="footnotes" id="onhover">[{event.startTime} - {event.endTime}]</div>
-      <span class="footnotes" id="event-duration"><b>{durationconv(duration)}</b></span>
       <br />
-      <div class="footnotes"><b>{event.location}</b></div>
-      {/* <hr style={{ color: "black" }} id="breakline" /> */}
-      <div class="footnotes" id="onhover">{event.people}</div>
-      <div class="footnotes" id="onhover"><u>{event.category.join(" | ")}</u></div>
-      {event.notes && <div class="footnotes" id="notes">{event.notes}</div>}
+      <div className="footnotes" id="onhover">
+        [{event.startTime} - {event.endTime}]
+      </div>
+      <span className="footnotes" id="event-duration">
+        <b>{durationconv(duration)}</b>
+      </span>
+      <br />
+      <div className="footnotes">
+        <b>{event.location}</b>
+      </div>
+      <div className="footnotes" id="onhover">
+        {event.people}
+      </div>
+      <div className="footnotes" id="onhover">
+        <u>{event.category.join(" | ")}</u>
+      </div>
+      {event.notes && <div className="footnotes" id="notes">{event.notes}</div>}
       {!event.fulfilled && (
         <div className="event-reason" style={{ color: "red", marginTop: "5px" }}>
           {event.reason}
         </div>
       )}
-      {(!event.fulfilled && !isTaskOverdue(event.date, event.endTime)) && ( <div id="event-shadow"></div>)}
+      {(!event.fulfilled && !isTaskOverdue(event.date, event.endTime)) && (
+        <div id="event-shadow"></div>
+      )}
+
+      {/* Render the extension block */}
+      {event.extension > 0 && (
+        <div className="event-extension" style={extensionStyle}></div>
+      )}
     </div>
   );
 };

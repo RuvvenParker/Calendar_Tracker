@@ -3,6 +3,19 @@ import { updateEvent } from "../utils/fetchData";
 import { fetchCategories } from "../utils/fetchData";
 import { documentId } from "firebase/firestore";
 
+const hexToRgb = (hex) => {
+  // Remove "#" if it's included
+  hex = hex.replace("#", "");
+
+  // Parse the hex color
+  const bigint = parseInt(hex, 16);
+  const r = (bigint >> 16) & 255;
+  const g = (bigint >> 8) & 255;
+  const b = bigint & 255;
+
+  return `${r}, ${g}, ${b}`;
+};
+
 const UpdateEventForm = ({ initialFormData }) => {
   const initialState = {
     title: "",
@@ -13,12 +26,15 @@ const UpdateEventForm = ({ initialFormData }) => {
     location: "",
     fulfilled: false,
     reason: "",
-    notes:""
+    notes: "",
+    extension: 0, // New attribute for extension in minutes
+    unfulfilledExtension: false, // New attribute for unfulfilled extension flag
   };
 
   const [formData, setFormData] = useState(initialState);
   const [categories, setCategories] = useState([]); // Fetch categories
   const [errorMessage, setErrorMessage] = useState("");
+
   // Populate form when initialFormData changes
   useEffect(() => {
     if (initialFormData) {
@@ -46,7 +62,10 @@ const UpdateEventForm = ({ initialFormData }) => {
           : prevData.category.filter((cat) => cat !== value),
       }));
     } else {
-      setFormData({ ...formData, [name]: type === "checkbox" ? checked : value });
+      setFormData({
+        ...formData,
+        [name]: type === "checkbox" ? checked : value,
+      });
     }
   };
 
@@ -94,7 +113,15 @@ const UpdateEventForm = ({ initialFormData }) => {
       <div className="form-group">
         <label>Categories</label>
         {categories.map((cat) => (
-          <div key={cat.id}>
+          <div
+            key={cat.id}
+            style={{
+              backgroundColor: `rgba(${hexToRgb(cat.Color)}, 0.5)`,
+              padding: "5px",
+              borderRadius: "4px",
+              marginBottom: "5px",
+            }}
+          >
             <input
               type="checkbox"
               id={cat.Category}
@@ -131,6 +158,32 @@ const UpdateEventForm = ({ initialFormData }) => {
       </div>
 
       <div className="form-group">
+        <label htmlFor="extension">Extension (in minutes)</label>
+        <input
+          type="range"
+          id="extension"
+          name="extension"
+          min="0"
+          max="120"
+          step="30"
+          value={formData.extension}
+          onChange={handleChange}
+        />
+        <span>{formData.extension} minutes</span>
+      </div>
+
+      {/* <div className="form-group">
+        <label htmlFor="unfulfilledExtension">Unfulfilled Extension</label>
+        <input
+          type="checkbox"
+          id="unfulfilledExtension"
+          name="unfulfilledExtension"
+          checked={formData.unfulfilledExtension}
+          onChange={handleChange}
+        />
+      </div> */}
+
+      <div className="form-group">
         <label htmlFor="location">Location</label>
         <input
           type="text"
@@ -155,7 +208,6 @@ const UpdateEventForm = ({ initialFormData }) => {
       <div className="form-group">
         <label htmlFor="notes">Notes</label>
         <textarea
-          type="textarea"
           id="notes"
           name="notes"
           value={formData.notes}
@@ -187,11 +239,10 @@ const UpdateEventForm = ({ initialFormData }) => {
           />
         </div>
       )}
+
       <div>
         <label className="form-group">Id: {formData.id}</label>
-
       </div>
-
 
       <button type="submit">Update Event</button>
     </form>
@@ -199,4 +250,3 @@ const UpdateEventForm = ({ initialFormData }) => {
 };
 
 export default UpdateEventForm;
-

@@ -61,16 +61,21 @@
 .event {
   position: absolute; /* Allow positioning relative to grid-cell */
   border-radius: 8px;
-  /* border: 2px solid rgba(0, 0, 0, 0.8); */
-  padding: 5px;
+  padding: 5px; /* Ensure consistent padding */
   color: #000000;
   text-align: center;
   font-size: 0.8rem;
   word-wrap: break-word;
-  /* font-weight: bold; */
+  /* display: flex; Use flexbox for better content alignment */
+  flex-direction: column; /* Stack content vertically */
+  justify-content: space-between; /* Distribute content evenly */
+  align-items: center; /* Center content horizontally */
+  width: calc(100% - 30px); /* Ensure it spans the grid cell width, accounting for padding */
+  left: 5px; /* Align to the left with padding */
   transition: transform 0.2s ease, box-shadow 0.2s ease; /* Smooth animation */
+  z-index: 1; /* Ensure it's above other elements */
+  overflow: hidden; /* Prevent content overflow */
 }
-
 .event:hover {
   transform: scale(1.10); /* Scale up by 5% */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8); /* Add a soft shadow */
@@ -192,4 +197,14 @@
 
 .form-buttons button:hover {
   opacity: 0.9;
+}
+.event-extension {
+  width: 100%;
+ /* Ensure it spans the full width of the event card */
+  position: absolute;
+  bottom: 0; /* Align to the bottom of the parent */
+  left: 0; /* Start from the left edge of the parent */
+  border-top: 2px solid #ccc; /* Optional: Visual separator */
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.1); /* Example background color */
 }

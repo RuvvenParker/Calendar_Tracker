@@ -2,6 +2,19 @@ import React from "react";
 import "./AddFormGenerator.css";
 import { labels } from "../config/formConfig";
 
+const hexToRgb = (hex) => {
+  // Remove "#" if it's included
+  hex = hex.replace("#", "");
+
+  // Parse the hex color
+  const bigint = parseInt(hex, 16);
+  const r = (bigint >> 16) & 255;
+  const g = (bigint >> 8) & 255;
+  const b = bigint & 255;
+
+  return `${r}, ${g}, ${b}`;
+};
+
 export const generateFormComponents = (
   attributes,
   types,
@@ -14,11 +27,11 @@ export const generateFormComponents = (
 
     if (attribute === "category") {
       return (
-        <div key={attribute}>
+        <div key={attribute} >
           <label>{labels[index]}</label>
           <div>
             {categories.map((cat) => (
-              <div key={cat.Category}>
+              <div key={cat.Category} style={{ backgroundColor: `rgba(${hexToRgb(cat.Color)}, 0.5)`, padding: "5px", borderRadius: "4px", marginBottom: "5px"}}>
                 <input
                   type="checkbox"
                   id={`category-${cat.Category}`}
