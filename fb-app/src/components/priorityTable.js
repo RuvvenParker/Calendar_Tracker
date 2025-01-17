@@ -15,28 +15,35 @@ const PriorityTable = ({ weekDates, categories }) => {
       snapshot.docs.forEach((doc) => {
         const event = doc.data();
         const eventDate = event.date;
-
+  
         // Check if the event date falls within the current week
         if (weekDates.some((date) => date.date === eventDate)) {
           const eventCategory = Array.isArray(event.category)
             ? event.category[0]
             : event.category; // Take the first category
-
-          if (!weekTasks[eventCategory]) {
-            weekTasks[eventCategory] = [];
+  
+          // Validate the priority attribute
+          if (
+            event.priority.length > 0 && !event.fulfilled
+          ) {
+            if (!weekTasks[eventCategory]) {
+              weekTasks[eventCategory] = [];
+            }
+  
+            weekTasks[eventCategory].push({
+              id: doc.id,
+              title: event.title,
+              date: eventDate,
+              priority: event.priority, // Add priority for future use
+            });
           }
-
-          weekTasks[eventCategory].push({
-            id: doc.id,
-            title: event.title,
-            date: eventDate,
-          });
         }
       });
-
+  
       setPriorityData(weekTasks);
     });
   };
+
 
   // Fetch dropped tasks for the selected week from Firebase
   const fetchDroppedTasks = async () => {

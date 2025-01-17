@@ -153,6 +153,17 @@ const UpdateEventForm = ({ initialFormData }) => {
       </div>
 
       <div className="form-group">
+        <label htmlFor="priority">Priority</label>
+        <input
+          type="number"
+          id="priority"
+          name="priority"
+          checked={formData.priority}
+          onChange={handleChange}
+        />
+      </div>
+
+      <div className="form-group">
         <label htmlFor="notes">Notes</label>
         <textarea
           type="textarea"

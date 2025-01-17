@@ -43,28 +43,31 @@ const Event = ({
   let textColor = "black";
   let eventOpacity = 1;
 
-  if (isTaskOverdue(event.date, event.endTime)) {
+  if (event.priority === "1" && !event.fulfilled) {
+    // Priority 1, not fulfilled
+    backgroundStyle = "red";
+    textColor = "white";
+  } else if (isTaskOverdue(event.date, event.endTime)) {
+    // Handle overdue tasks
     if (!event.fulfilled) {
-      // Overdue and unfulfilled
       backgroundStyle = "black";
       textColor = "white";
     } else {
-      // Overdue and fulfilled
       backgroundStyle =
         categoryColors.length === 1
-          ? categoryColors[0] // Use solid color for a single category
-          : `linear-gradient(to bottom, ${categoryColors.join(", ")})`; // Gradient for multiple
+          ? categoryColors[0]
+          : `linear-gradient(to bottom, ${categoryColors.join(", ")})`;
       textColor = "gray";
-      eventOpacity = 0.5; // Reduce opacity for fulfilled overdue tasks
+      eventOpacity = 0.5;
     }
   } else {
-    let darkershade = darkenHex(categoryColors[0],0.75)
-    // Not overdue: Solid or gradient color
+    let darkershade = darkenHex(categoryColors[0], 0.75);
     backgroundStyle =
       categoryColors.length === 1
         ? `linear-gradient(to bottom, ${categoryColors[0]}, ${darkershade})`
-        : `linear-gradient(to bottom, ${categoryColors.join(", ")})`; // Multiple categories: gradient
+        : `linear-gradient(to bottom, ${categoryColors.join(", ")})`;
   }
+
 
 
   // const bordercol= `linear-gradient(to bottom, ${categoryColors.map(darkenHex).join(", ")})`;

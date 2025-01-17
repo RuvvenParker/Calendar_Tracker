@@ -2,7 +2,6 @@ export const attributes = [
     "title",
     "category",
     "subcategory",
-    "eisenhQuarter",
     "priority",
     "date",
     "startTime",
@@ -18,7 +17,6 @@ export const attributes = [
     "Title",
     "Category",
     "Subcategory",
-    "Eisenhower Matrix",
     "Priority",
     "Date",
     "Start",
@@ -35,7 +33,6 @@ export const attributes = [
     "text",           // title
     "text",           // category
     "text",           // subcategory
-    "number",         // eisenhQuarter
     "number",         // priority
     "date",
     "time", // startTime
